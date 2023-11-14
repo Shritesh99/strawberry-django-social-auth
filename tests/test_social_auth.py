@@ -1,10 +1,11 @@
 import pytest
 from strawberry.types import ExecutionResult
 
-from .testcases import SchemaHelper
+from .conftest import SchemaHelper
+
 
 @pytest.fixture
-def login_query(request):
+def login_query():
     def inner() -> str:
         arguments = (
             f'provider: "",'
@@ -76,7 +77,8 @@ def default_test(res: ExecutionResult):
 
 
 def test_login_success(verified_schema, unverified_schema, allow_login_not_verified, login_query):
-    res = verified_schema.execute(login_query(verified_schema.us_type))
+    res = verified_schema.execute(login_query())
+    print(res)
     default_test(res)
 # def test_archived_user_becomes_active_on_login(
 #     db_archived_user_status, login_query, archived_schema

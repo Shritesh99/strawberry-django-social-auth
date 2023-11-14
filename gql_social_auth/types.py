@@ -39,7 +39,7 @@ class SocialType(ObtainJSONWebTokenType):
         description="OAUTH provider", default=None)
     extra_data: Optional[SocialJSON] = strawberry.field(
         description="Extra data requested from user",
-        resolver=resolve_extra_data, default=None)
+        resolver=resolve_extra_data)
 
     @classmethod
     def from_social_user(cls, user) -> "SocialType":

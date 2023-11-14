@@ -1,5 +1,4 @@
 import dataclasses
-import strawberry
 from contextlib import contextmanager
 from dataclasses import asdict, dataclass
 from typing import TYPE_CHECKING, Any, Iterable, NamedTuple, Union
@@ -10,7 +9,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.http import HttpRequest
 from faker.providers import BaseProvider
-from gqlauth.captcha.models import Captcha
 from gqlauth.core.constants import JWT_PREFIX
 from gqlauth.core.middlewares import USER_OR_ERROR_KEY, UserOrError, get_user_or_error
 from gqlauth.jwt.types_ import TokenType
@@ -19,20 +17,7 @@ from gqlauth.settings_type import GqlAuthSettings
 from strawberry import Schema
 from strawberry.types import ExecutionResult
 from strawberry.utils.str_converters import to_camel_case
-
-from gql_social_auth import mutations
-
-# from testproject.relay_schema import relay_schema
-
-from gqlauth.core.middlewares import JwtSchema
-
-@strawberry.type
-class Mutation:
-    social_auth = mutations.SocialAuth.field
-
-
-arg_schema = JwtSchema(mutation=Mutation)
-
+from testproject.schema import arg_schema
 
 if TYPE_CHECKING:  # pragma: no cover
     from gqlauth.core.utils import UserProto
@@ -195,11 +180,6 @@ def wrong_pass_unverified_user_status_type(unverified_user_status_type):
     us = unverified_user_status_type
     us.user.password = WRONG_PASSWORD
     return us
-
-
-@pytest.fixture()
-def captcha(transactional_db) -> Captcha:
-    return Captcha.create_captcha()
 
 
 @pytest.fixture()

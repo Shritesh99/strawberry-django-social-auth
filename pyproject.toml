@@ -31,14 +31,36 @@ strawberry-graphql-django = ">=0.10.5"
 social-auth-app-django= ">=2.1.0"
 strawberry-django-auth = ">=0.373.1"
 
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.3.3"
+coverage = "^7.2"
+pytest = "^7.2"
+pytest-cov = "^4.0"
+types-cryptography = "^3.3.23"
+django-mock-queries = "^2.1.7"
+types-mock = "^5.0.0"
+types-jwt = "^0.1.0"
+types-pkg-resources = "^0.1.0"
+mkdocs = ">=1.3.0"
+mkdocs-markdownextradata-plugin = ">=0.2.5"
+mkdocs-material = ">=8.5.4"
+mkdocs-minify-plugin = ">=0.5.0"
+pymdown-extensions = ">=9.9"
+Markdown = ">=3.4.1"
+Faker = ">=18.2.0"
+pytest-asyncio = ">=0.21.0"
+pydoc-markdown = {extras = ["novella"], version = ">=4.6.4"}
+setuptools = ">=67.6.0"
+channels = {extras = ["daphne"], version = ">=4.0.0"}
+pytest-django = "^4.5.2"
 
 [tool.pytest.ini_options]
 django_find_project = false
-addopts = "-ra -p no:warnings"
+addopts = "-ra -s -p no:warnings"
 testpaths = [
     "tests",
 ]
-DJANGO_SETTINGS_MODULE = "tests.settings"
+DJANGO_SETTINGS_MODULE = "testproject.settings"
 python_files = "tests.py test_*.py *_tests.py"
 
 [tool.poetry.urls]
@@ -73,6 +95,9 @@ force_sort_within_sections = true
 plugins = ["mypy_django_plugin.main", "strawberry.ext.mypy_plugin"]
 ignore_missing_imports = "True"
 
+[tool.django-stubs]
+django_settings_module = "testproject.settings"
+
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
@@ -86,4 +111,4 @@ ignore = [
 ]
 fix = true
 
-src = ["gql_social_auth", "tests"]
+src = ["gql_social_auth", "tests", "testproject"]
