@@ -2,8 +2,10 @@ name: 🆙 Release
 
 on:
   push:
-    branches:
-      - main
+    branches: [master, main]
+  release:
+    types: [ released ]
+
 jobs:
   deploy:
     name: Deploy

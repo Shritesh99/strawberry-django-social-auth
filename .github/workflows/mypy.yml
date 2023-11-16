@@ -1,14 +1,17 @@
+---
 name: 🦺 MyPy
 
 on:
   push:
-    branches: [main]
+    branches: [master, main]
   pull_request:
-    branches: [main]
+    branches: [master, main]
     paths:
       - "qtgql/**"
       - "tests/**"
       - ".github/workflows/mypy.yml"
+  release:
+    types: [ released ]
 env:
   IS_GITHUB_ACTION: 1
 

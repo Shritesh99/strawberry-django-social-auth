@@ -1,8 +1,10 @@
 name: docs deploy
 on:
   push:
-    branches:
-      - main
+    branches: [master, main]
+  release:
+    types: [ released ]
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
