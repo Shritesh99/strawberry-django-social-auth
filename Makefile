@@ -15,6 +15,8 @@ build-docs:
 
 # gh only!
 deploy-docs:
-	python -m pip install -r docs/requirements.txt
+	cd docs
+	python -m pip install -r requirements.txt
+	cd ..
 	python docs/pre_build.py
 	mkdocs gh-deploy --force
