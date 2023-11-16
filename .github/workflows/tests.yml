@@ -43,7 +43,7 @@ jobs:
           key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
       - name: Run tests
         run: |
-          echo ${{ secrets.GOOGLE_CLIENT_KEY }} > key.json
+          echo '${{ secrets.GOOGLE_CLIENT_KEY }}' > key.json
           poetry run pip install "Django~=${{ matrix.django-version }}"
           make test
 
