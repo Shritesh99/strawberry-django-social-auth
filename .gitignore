@@ -60,3 +60,7 @@ crashlytics-build.properties
 fabric.properties
 
 .idea
+
+key.json
+
+testproject/db.sqlite3

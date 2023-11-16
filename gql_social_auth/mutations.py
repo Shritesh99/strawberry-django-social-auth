@@ -5,7 +5,3 @@ from .mixins import SocialAuthMixin
 
 class SocialAuth(SocialAuthMixin, ArgMixin):
     __doc__ = SocialAuthMixin.__doc__
-
-
-# class SocialAuthJWT(ArgMixin):
-#     __doc__ = JSONWebTokenMixin.__doc__

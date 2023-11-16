@@ -131,63 +131,6 @@ class UserStatusType:
 
 
 @pytest.fixture()
-def verified_user_status_type():
-    return UserStatusType(
-        verified=True,
-        user=UserType.generate(),
-    )
-
-
-@pytest.fixture()
-def unverified_user_status_type():
-    return UserStatusType(
-        verified=False,
-        user=UserType.generate(),
-    )
-
-
-@pytest.fixture()
-def db_unverified_user_status(db, unverified_user_status_type) -> UserStatusType:
-    us = unverified_user_status_type
-    us.create()
-    return us
-
-
-@pytest.fixture()
-def db_verified_user_status(transactional_db, verified_user_status_type) -> UserStatusType:
-    us = verified_user_status_type
-    us.create()
-    return us
-
-
-@pytest.fixture()
-def db_archived_user_status(transactional_db, verified_user_status_type) -> UserStatusType:
-    us = verified_user_status_type
-    us.archived = True
-    us.create()
-    return us
-
-
-@pytest.fixture()
-def wrong_pass_ver_user_status_type():
-    user_type = UserType.generate()
-    user_type.password = WRONG_PASSWORD
-    return UserStatusType(verified=True, user=user_type)
-
-
-@pytest.fixture()
-def wrong_pass_unverified_user_status_type(unverified_user_status_type):
-    us = unverified_user_status_type
-    us.user.password = WRONG_PASSWORD
-    return us
-
-
-@pytest.fixture()
-def allow_login_not_verified(settings) -> None:
-    settings.GQL_AUTH.ALLOW_LOGIN_NOT_VERIFIED = True
-
-
-@pytest.fixture()
 def app_settings(settings) -> GqlAuthSettings:
     return settings.GQL_AUTH
 
@@ -215,40 +158,32 @@ def override_gqlauth(app_settings):
 @dataclasses.dataclass
 class FakeContext:
     request: Union[HttpRequest, dict]
+    session: dict
 
 
 class SchemaHelper(NamedTuple):
     schema: Schema
     context: FakeContext
+    request: HttpRequest
     us_type: UserStatusType
 
     @classmethod
     def create(cls, rf, us_type: UserStatusType, schema=arg_schema):
         user = us_type.user.obj
         req = rf.post(path="/fake")
-        context = FakeContext(request=req)
+        context = FakeContext(request=req, session={})
         setattr(context.request, USER_OR_ERROR_KEY, UserOrError(user=user))
-        return SchemaHelper(context=context, schema=schema, us_type=us_type)
+        return SchemaHelper(context=context, schema=schema, us_type=us_type, request=req)
 
-    def execute(self, query: str, relay: bool = False) -> ExecutionResult:
+    def execute(self, query: str, arguments: dict, relay: bool = False) -> ExecutionResult:
         # if relay:
         #     return relay_schema.execute_sync(query=query, context_value=self.context)
-        return self.schema.execute_sync(query=query, context_value=self.context)
+        return self.schema.execute_sync(query=query, variable_values=arguments, context_value=self.context)
 
 
 @pytest.fixture()
 def anonymous_schema(rf) -> SchemaHelper:
     req = rf.post(path="/fake")
     setattr(req, USER_OR_ERROR_KEY, get_user_or_error(req))
-    context = FakeContext(request=req)
-    return SchemaHelper(schema=arg_schema, context=context, us_type=None)
-
-
-@pytest.fixture()
-def verified_schema(db_verified_user_status, rf) -> SchemaHelper:
-    return SchemaHelper.create(rf=rf, us_type=db_verified_user_status)
-
-
-@pytest.fixture()
-def unverified_schema(rf, db_unverified_user_status) -> SchemaHelper:
-    return SchemaHelper.create(rf=rf, us_type=db_unverified_user_status)
+    context = FakeContext(request=req, session={})
+    return SchemaHelper(schema=arg_schema, context=context, us_type=None, request=req)

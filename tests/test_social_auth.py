@@ -1,91 +1,102 @@
 import pytest
 from strawberry.types import ExecutionResult
 
-from .conftest import SchemaHelper
+from google.auth.transport.requests import Request
+from google.oauth2 import service_account
 
+from .conftest import SchemaHelper
+from gql_social_auth.constants import Messages
+
+scopes = ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile']
+credentials = service_account.Credentials.from_service_account_file(
+    'key.json', scopes=scopes
+)
 
 @pytest.fixture
 def login_query():
     def inner() -> str:
-        arguments = (
-            f'provider: "",'
-            f' accessToken: ""'
-        )
-
         return """
-           mutation {
-           socialAuth(%s)
-                  {
-            uid
-            extraData
-            errors
-            success
-            refreshToken {
-              created
-              isExpired
-              expiresAt
-              token
-              revoked
-            }
-            token {
-              token
-              payload {
-                exp
-                origIat
-              }
-            }
-            user {
-              archived
-              dateJoined
-              firstName
-              isActive
-              id
-              isStaff
-              isSuperuser
-              lastLogin
-              lastName
-              logentrySet {
-                pk
-              }
-              status {
-                archived
-                verified
-              }
-              verified
-            }
-          }
-        }
-           """ % (
-            arguments
-        )
+            mutation SocialAuth($provider: String!, $accessToken: String!){
+                socialAuth(provider: $provider, accessToken: $accessToken){
+                    uid
+                    extraData
+                    errors
+                    success
+                    refreshToken {
+                        created
+                        isExpired
+                        expiresAt
+                        token
+                        revoked
+                    }
+                    token {
+                        token
+                        payload {
+                            exp
+                            origIat
+                        }
+                    }
+                    user {
+                        archived
+                        dateJoined
+                        firstName
+                        isActive
+                        id
+                        isStaff
+                        isSuperuser
+                        lastLogin
+                        lastName
+                        logentrySet {
+                            pk
+                        }
+                        status {
+                            archived
+                            verified
+                        }
+                        verified
+                    }
+                  }
+                }
+           """
 
     return inner
 
+
 @pytest.fixture()
-def archived_schema(db_archived_user_status, rf) -> SchemaHelper:
-    return SchemaHelper.create(rf=rf, us_type=db_archived_user_status)
+def get_variables():
+    if credentials.valid is False:
+        credentials.refresh(Request())
+    return {
+        "provider": "google-oauth2",
+        "accessToken": credentials.token
+    }
 
 
 def default_test(res: ExecutionResult):
     assert not res.errors
-    res = res.data["tokenAuth"]
+    res = res.data["socialAuth"]
     assert res["success"]
     assert not res["errors"]
     assert res["refreshToken"]["token"]
     assert res["token"]["token"]
-    assert res["user"]["lastLogin"]
 
 
-def test_login_success(verified_schema, unverified_schema, allow_login_not_verified, login_query):
-    res = verified_schema.execute(login_query())
-    print(res)
+def test_login_success(transactional_db, anonymous_schema, get_variables, login_query):
+    res = anonymous_schema.execute(login_query(), arguments=get_variables)
     default_test(res)
-# def test_archived_user_becomes_active_on_login(
-#     db_archived_user_status, login_query, archived_schema
-# ):
-#     user = db_archived_user_status.user.obj
-#     assert user.status.archived
-#     res = archived_schema.execute(login_query(db_archived_user_status))
-#     user.refresh_from_db()
-#     assert not user.status.archived
-#     default_test(res)
+
+
+def test_invalid_provider(transactional_db, anonymous_schema, get_variables, login_query):
+    res = anonymous_schema.execute(login_query(), arguments={"provider": "a", "accessToken":""})
+    assert not res.errors
+    res = res.data["socialAuth"]
+    assert not res["success"]
+    assert res["errors"]["nonFieldErrors"] == Messages.NO_PROVIDER
+
+
+def test_invalid_access_token(transactional_db, anonymous_schema, get_variables, login_query):
+    res = anonymous_schema.execute(login_query(), arguments={"provider": "google-oauth2", "accessToken": ""})
+    assert not res.errors
+    res = res.data["socialAuth"]
+    assert not res["success"]
+    assert res["errors"]["nonFieldErrors"]
