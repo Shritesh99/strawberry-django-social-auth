@@ -44,6 +44,7 @@ jobs:
       - name: Run tests
         run: |
           echo '${{ secrets.GOOGLE_CLIENT_KEY }}' > key.json
+          poetry install -with dev
           poetry run pip install "Django~=${{ matrix.django-version }}"
           make test
 

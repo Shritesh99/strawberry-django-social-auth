@@ -66,4 +66,4 @@ jobs:
 
       - name: mypy checks
         run: |
-          poetry run mypy ./gqlauth
+          poetry run mypy ./gql_social_auth
