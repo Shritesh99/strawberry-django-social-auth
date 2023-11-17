@@ -1,14 +1,14 @@
-[//]: # ([![Tests]&#40;https://img.shields.io/github/actions/workflow/status/nrbnlulu/strawberry-django-auth/tests.yml?label=Tests&style=for-the-badge&#41;]&#40;https://github.com/nrbnlulu/strawberry-django-auth/actions/workflows/tests.yml&#41;)
+[![Tests](https://img.shields.io/github/actions/workflow/status/shritesh99/strawberry-django-social-auth/tests.yml?label=Tests&style=for-the-badge)](https://github.com/shritesh99/strawberry-django-social-auth/actions/workflows/tests.yml)
 
-[//]: # ([![Codecov]&#40;https://img.shields.io/codecov/c/github/nrbnlulu/strawberry-django-auth?style=for-the-badge&#41;]&#40;https://app.codecov.io/gh/nrbnlulu/strawberry-django-auth&#41;)
+[![Codecov](https://img.shields.io/codecov/c/github/shritesh99/strawberry-django-social-auth?style=for-the-badge)](https://app.codecov.io/gh/shritesh99/strawberry-django-social-auth)
 
-[//]: # ([![Pypi]&#40;https://img.shields.io/pypi/v/strawberry-django-auth.svg?style=for-the-badge&logo=appveyor&#41;]&#40;https://pypi.org/project/strawberry-django-auth/&#41;)
+[![Pypi](https://img.shields.io/pypi/v/strawberry-django-social-auth.svg?style=for-the-badge&logo=appveyor)](https://pypi.org/project/strawberry-django-social-auth/)
 
-[//]: # ([![contributions welcome]&#40;https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=for-the-badge&logo=appveyor&#41;]&#40;https://github.com/nrbnlulu/strawberry-django-auth/blob/main/CONTRIBUTING.md&#41;)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=for-the-badge&logo=appveyor)](https://github.com/shritesh99/strawberry-django-social-auth/blob/main/CONTRIBUTING.md)
 
-[//]: # ([![Pypi downloads]&#40;https://img.shields.io/pypi/dm/strawberry-django-auth?style=for-the-badge&#41;]&#40;https://pypistats.org/packages/strawberry-django-auth&#41;)
+[![Pypi downloads](https://img.shields.io/pypi/dm/strawberry-django-social-auth?style=for-the-badge)](https://pypistats.org/packages/strawberry-django-social-auth)
 
-[//]: # ([![Python versions]&#40;https://img.shields.io/pypi/pyversions/strawberry-django-auth?style=social&#41;]&#40;https://pypi.org/project/strawberry-django-auth/&#41;)
+[![Python versions](https://img.shields.io/pypi/pyversions/strawberry-django-django-auth?style=social)](https://pypi.org/project/strawberry-django-social-auth/)
 
 # Strawberry-django Social Auth
 [Django](https://github.com/django/django)  social authentication with [Strawberry](https://strawberry.rocks/) using [Social Django](https://github.com/Shritesh99/strawberry-django-social-auth/).
