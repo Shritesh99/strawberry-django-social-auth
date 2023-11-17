@@ -15,6 +15,6 @@ build-docs:
 
 # gh only!
 deploy-docs:
-	python -m pip install -r requirements.txt
+	python -m pip install -r .github/workflows/requirements.txt
 	python docs/pre_build.py
 	mkdocs gh-deploy --force
