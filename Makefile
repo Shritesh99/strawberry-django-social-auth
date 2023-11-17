@@ -15,6 +15,7 @@ build-docs:
 
 # gh only!
 deploy-docs:
+	cd docs
 	ls
 	python -m pip install -r docs/requirements.txt
 	python docs/pre_build.py
