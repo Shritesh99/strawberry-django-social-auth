@@ -4,13 +4,13 @@ from strawberry.types import ExecutionResult
 from google.auth.transport.requests import Request
 from google.oauth2 import service_account
 
-from .conftest import SchemaHelper
 from gql_social_auth.constants import Messages
 
 scopes = ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile']
 credentials = service_account.Credentials.from_service_account_file(
     'key.json', scopes=scopes
 )
+
 
 @pytest.fixture
 def login_query():
@@ -87,7 +87,7 @@ def test_login_success(transactional_db, anonymous_schema, get_variables, login_
 
 
 def test_invalid_provider(transactional_db, anonymous_schema, get_variables, login_query):
-    res = anonymous_schema.execute(login_query(), arguments={"provider": "a", "accessToken":""})
+    res = anonymous_schema.execute(login_query(), arguments={"provider": "a", "accessToken": ""})
     assert not res.errors
     res = res.data["socialAuth"]
     assert not res["success"]

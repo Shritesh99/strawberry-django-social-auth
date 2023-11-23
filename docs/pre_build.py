@@ -25,12 +25,11 @@ if __name__ == "__main__":
     for index, file in enumerate(files):
         shutil.copyfile(root_dir / file, root_dir / "docs" / dest[index])
 
-    print(src)
     context = Context(directory=str(src))
     loader = PythonLoader(
         search_path=[str(src)],
         modules=[
-            "mixins",
+            "mixins", "decorators"
         ],
     )
     renderer = MarkdownRenderer(

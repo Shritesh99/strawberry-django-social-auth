@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "strawberry-django-social-auth"
-version = "0.1.0"
+version = "0.2.0"
 description = "Graphql Social authentication system with Strawberry for Django."
 license = "MIT"
 authors = ["Shritesh Jamulkar <shritesh.sj@gmail.com>"]
@@ -30,6 +30,7 @@ PyJWT = ">=2.6.0,<3.0"
 strawberry-graphql-django = ">=0.10.5"
 social-auth-app-django= ">=2.1.0"
 strawberry-django-auth = ">=0.373.1"
+promise = "^2.3"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.3.3"
