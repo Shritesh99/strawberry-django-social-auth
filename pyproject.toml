@@ -104,6 +104,12 @@ django_settings_module = "testproject.settings"
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
 
+[tool.autopub]
+git-username = "shritesh99"
+git-email = "shritesh.sj@gmail.com"
+project-name = "strawberry-django-social-auth"
+append-github-contributor = true
+
 [tool.ruff]
 line-length = 100
 select = ["E", "F", "ERA", "I"]
