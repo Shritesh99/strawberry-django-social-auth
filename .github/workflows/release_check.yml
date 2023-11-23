@@ -1,14 +1,8 @@
 name: 🆙 Release file check
 
 on:
-  push:
-    branches: [master, main]
-    paths:
-    - "gqlauth/**"
-    - ".github/workflows/release_check.yml"
-    - "pyproject.toml"
   release:
-    types: [ published ]
+    types: [ released ]
 
 jobs:
   validate:
