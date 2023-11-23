@@ -2,7 +2,10 @@ name: 🆙 Release
 
 on:
   push:
-    branches: [master, main]
+    branches:
+      - master
+      - main
+    tags: ['v[0-9].[0-9]+.[0-9]+']
   release:
     types: [ released ]
 
@@ -11,7 +14,6 @@ jobs:
     name: Deploy
     environment: Deployment
     runs-on: ubuntu-latest
-    if: ${{ github.ref=='refs/heads/main' && github.event_name!='pull_request' }}
 
     steps:
         - uses: actions/checkout@v3
