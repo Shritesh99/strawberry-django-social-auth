@@ -3,7 +3,7 @@ name: Release
 on:
   workflow_run:
     workflows: [ "Release file check" ]
-    branches: [master, main]
+    branches: [ master, main ]
     types:
       - completed
   release:
@@ -43,5 +43,4 @@ jobs:
             autopub prepare
             poetry build
             autopub commit
-            autopub githubrelease
             poetry publish --username=__token__

@@ -2,17 +2,17 @@
 name: Run Tests
 
 on:
-  push:
-    branches: [master, main]
-  pull_request:
-    branches: [master, main]
-  release:
-    types: [released]
   workflow_run:
     workflows: [ "MyPy" ]
     branches: [ master, main ]
     types:
       - completed
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+  release:
+    types: [ released ]
 
 jobs:
   tests:
