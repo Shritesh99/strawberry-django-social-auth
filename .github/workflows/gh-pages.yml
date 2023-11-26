@@ -5,10 +5,6 @@ on:
     branches: [ master, main ]
     types:
       - completed
-  push:
-    branches: [master, main]
-  release:
-    types: [ released ]
 
 jobs:
   deploy:
