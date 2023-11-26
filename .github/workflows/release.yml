@@ -1,6 +1,11 @@
-name: 🆙 Release
+name: Release
 
 on:
+  workflow_run:
+    workflows: [ "Release file check" ]
+    branches: [master, main]
+    types:
+      - completed
   release:
     types: [ released ]
 
@@ -9,6 +14,7 @@ jobs:
     name: Deploy
     environment: Deployment
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
         - uses: actions/checkout@v3
@@ -33,5 +39,9 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
             POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
           run: |
+            git remote set-url origin https://${{ secrets.BOT_TOKEN }}@github.com/${{ github.repository }}
+            autopub prepare
             poetry build
-            poetry publish --username=__token__ --password=${{ secrets.PYPI_TOKEN }}
+            autopub commit
+            autopub githubrelease
+            poetry publish --username=__token__

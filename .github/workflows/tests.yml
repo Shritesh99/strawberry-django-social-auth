@@ -8,12 +8,18 @@ on:
     branches: [master, main]
   release:
     types: [released]
+  workflow_run:
+    workflows: [ "MyPy" ]
+    branches: [ master, main ]
+    types:
+      - completed
 
 jobs:
   tests:
     name: Tests
     environment: Deployment
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     strategy:
       fail-fast: false
       matrix:

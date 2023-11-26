@@ -1,5 +1,5 @@
 ---
-name: 🦺 MyPy
+name: MyPy
 
 on:
   push:

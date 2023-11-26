@@ -1,6 +1,11 @@
-name: 🆙 Release file check
+name: Release file check
 
 on:
+  workflow_run:
+    workflows: [ "Run Tests" ]
+    branches: [ master, main ]
+    types:
+      - completed
   release:
     types: [ released ]
 
@@ -9,6 +14,8 @@ jobs:
     name: Validate
     environment: Deployment
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     steps:
       - uses: actions/checkout@v3
       - name: Setup Python
