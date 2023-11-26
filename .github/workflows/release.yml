@@ -14,7 +14,7 @@ jobs:
     name: Deploy
     environment: Deployment
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'release' && github.event.action == 'released' && github.event.workflow_run.conclusion == 'success' }}
 
     steps:
         - uses: actions/checkout@v3
