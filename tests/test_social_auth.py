@@ -19,6 +19,7 @@ def login_query():
             mutation SocialAuth($provider: String!, $accessToken: String!){
                 socialAuth(provider: $provider, accessToken: $accessToken){
                     uid
+                    avatar
                     extraData
                     errors
                     success
@@ -37,6 +38,7 @@ def login_query():
                         }
                     }
                     user {
+                        email
                         archived
                         dateJoined
                         firstName

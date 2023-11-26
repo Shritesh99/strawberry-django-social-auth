@@ -2,7 +2,7 @@ import strawberry
 from typing import TYPE_CHECKING, Optional, cast, NewType
 
 from gqlauth.user.types_ import UserType
-from gqlauth.core.utils import app_settings, inject_fields
+from gqlauth.core.utils import app_settings
 from gqlauth.jwt.types_ import ObtainJSONWebTokenType, RefreshTokenType, TokenType
 from gqlauth.models import RefreshToken
 
@@ -37,6 +37,8 @@ def resolve_extra_data(self, info) -> SocialJSON:
 class SocialType(ObtainJSONWebTokenType):
     uid: Optional[str] = strawberry.field(
         description="User's uid", default=None)
+    avatar: Optional[str] = strawberry.field(
+        description="User's Avarar's URL", default=None)
     provider: Optional[str] = strawberry.field(
         description="OAUTH provider", default=None)
     extra_data: Optional[SocialJSON] = strawberry.field(
@@ -53,6 +55,7 @@ class SocialType(ObtainJSONWebTokenType):
             user=cast(UserType, user),
             token=TokenType.from_user(user),
             uid=user.social_user.uid,
+            avatar=user.avatar,
             provider=user.social_user.provider,
         )
         if app_settings.JWT_LONG_RUNNING_REFRESH_TOKEN:
