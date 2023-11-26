@@ -8,7 +8,7 @@
 
 [![Pypi downloads](https://img.shields.io/pypi/dm/strawberry-django-social-auth?style=for-the-badge)](https://pypistats.org/packages/strawberry-django-social-auth)
 
-[![Python versions](https://img.shields.io/pypi/pyversions/strawberry-django-django-auth?style=social)](https://pypi.org/project/strawberry-django-social-auth/)
+[![Python versions](https://img.shields.io/pypi/pyversions/strawberry-django-social-auth?style=social)](https://pypi.org/project/strawberry-django-social-auth/)
 
 # Strawberry-django Social Auth
 [Django](https://github.com/django/django)  social authentication with [Strawberry](https://strawberry.rocks/) using [Social Django](https://github.com/Shritesh99/strawberry-django-social-auth/).
@@ -24,9 +24,12 @@ Django Social Auth for Strawberry Graphql engine.
 
 * [x] Awesome docs!
 * [X] Social Auth
+* [x] Profile pic's URL storage in User's model  
+* [ ] Relay Support (Coming Soon...)
 
 ### Full schema features
-
+#### Usage:
+1. Use built-In Mutation
 ```python
 @strawberry.type
 class Mutation:
@@ -34,6 +37,72 @@ class Mutation:
 
 schema = strawberry.Schema(query=Query, mutation=Mutation)
 ```
+2. Customize the Usage of Mutation using the decorator
+```python
+from gql_social_auth.decorators import social_auth
+from gql_social_auth.types import SocialAuthInput
+
+@strawberry.type
+class CustomMutation:
+    @strawberry.mutation
+    @social_auth
+    def social_auth(self, info: Info, _input: SocialAuthInput, user, errors) -> CustomReturnType:
+        # user: User object from model
+        # errors: If any errors occurred during the process of getting the social auth
+        # Note: Any of the user or errors is None at a time, both can't be None at the same time...
+        if errors is not None:
+            # Handle Error here
+        # Use user Object here... 
+        
+```
+
+#### Calling:
+```
+mutation SocialAuth($provider: String!, $accessToken: String!){
+    socialAuth(provider: $provider, accessToken: $accessToken){
+        uid
+        avatar
+        extraData
+        errors
+        success
+        refreshToken {
+            created
+            isExpired
+            expiresAt
+            token
+            revoked
+        }
+        token {
+            token
+            payload {
+                exp
+                origIat
+            }
+        }
+        user {
+            email
+            archived
+            dateJoined
+            firstName
+            isActive
+            id
+            isStaff
+            isSuperuser
+            lastLogin
+            lastName
+            logentrySet {
+                pk
+            }
+            status {
+                archived
+                verified
+            }
+            verified
+        }
+      }
+    }
+```
+
 
 ## Contributing
 
