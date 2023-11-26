@@ -17,7 +17,6 @@ from gqlauth.settings_type import GqlAuthSettings
 BASE_DIR = Path(__file__).parent
 sys.path.append(str(BASE_DIR / "testproject"))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -92,7 +91,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -151,8 +149,6 @@ SOCIAL_AUTH_PIPELINE = [
 
     # Update the user record with any changed info from the auth service.
     'social_core.pipeline.user.user_details',
-
-    'gql_social_auth.pipeline.get_avatar',
 ]
 
 # Internationalization
@@ -165,7 +161,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

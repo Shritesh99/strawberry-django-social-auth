@@ -1,5 +1,6 @@
 import strawberry
 from typing import TYPE_CHECKING, Optional, cast, NewType
+from django.conf import settings
 
 from gqlauth.user.types_ import UserType
 from gqlauth.core.utils import app_settings
@@ -55,9 +56,10 @@ class SocialType(ObtainJSONWebTokenType):
             user=cast(UserType, user),
             token=TokenType.from_user(user),
             uid=user.social_user.uid,
-            avatar=user.avatar,
             provider=user.social_user.provider,
         )
+        if hasattr(settings, 'SOCIAL_AUTH_PIPELINE') and 'gql_social_auth.pipeline.get_avatar' in settings.SOCIAL_AUTH_PIPELINE:
+            ret.avatar = user.avatar
         if app_settings.JWT_LONG_RUNNING_REFRESH_TOKEN:
             ret.refresh_token = cast(RefreshTokenType, RefreshToken.from_user(user))
         return ret

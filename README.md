@@ -27,8 +27,20 @@ Django Social Auth for Strawberry Graphql engine.
 * [x] Profile pic's URL storage in User's model  
 * [ ] Relay Support (Coming Soon...)
 
-### Full schema features
-#### Usage:
+### Installation:
+```python
+pip install strawberry-django-social-auth
+```
+- Add this for Avatar support in `settings.py`
+```python
+
+SOCIAL_AUTH_PIPELINE = [
+    ...
+    'gql_social_auth.pipeline.get_avatar',  # Get Avatar Pipeline
+]
+```
+
+### Usage:
 1. Use built-In Mutation
 ```python
 @strawberry.type
