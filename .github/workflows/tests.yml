@@ -7,8 +7,22 @@ on:
     branches: [ master, main ]
     types:
       - completed
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+  release:
+    types: [ released ]
 
 jobs:
+  debugging:
+      name: debug
+      runs-on: ubuntu-latest
+      steps:
+        - name: Debugging
+          run: |
+            echo "Workflow Run Context: ${{ toJson(github.event.workflow_run) }}"
+            echo "Current Event Context: ${{ toJson(github.event) }}"
   tests:
     name: Tests
     environment: Deployment
