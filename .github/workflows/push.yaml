@@ -22,3 +22,6 @@ jobs:
       - Check
     if: needs.Check.result == 'success'
     uses: ./.github/workflows/tests.yml
+    secrets:
+      GOOGLE_CLIENT_KEY: ${{ secrets.GOOGLE_CLIENT_KEY }}
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
