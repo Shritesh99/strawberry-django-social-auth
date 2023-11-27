@@ -15,19 +15,11 @@ on:
     types: [ released ]
 
 jobs:
-  debugging:
-      name: debug
-      runs-on: ubuntu-latest
-      steps:
-        - name: Debugging
-          run: |
-            echo "Workflow Run Context: ${{ toJson(github.event.workflow_run) }}"
-            echo "Current Event Context: ${{ toJson(github.event) }}"
   tests:
     name: Tests
     environment: Deployment
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    
     strategy:
       fail-fast: false
       matrix:
@@ -35,6 +27,11 @@ jobs:
         python-version: ["3.8", "3.9", "3.10", "3.11"]
 
     steps:
+      - name: Debugging
+        run: |
+          echo "Workflow Run Context: ${{ toJson(github.event.workflow_run) }}"
+          echo "Current Event Context: ${{ toJson(github.event) }}"
+
       - name: Checkout
         uses: actions/checkout@v3
 
