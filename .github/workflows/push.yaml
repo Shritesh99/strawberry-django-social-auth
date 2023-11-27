@@ -21,4 +21,4 @@ jobs:
     needs:
       - Check
     if: needs.Check.result == 'success'
-    uses: ./.github/workflows/test.yml
+    uses: ./.github/workflows/tests.yml
