@@ -25,7 +25,6 @@ jobs:
             python -m pip install pip --upgrade
             python -m pip install poetry githubrelease httpx==0.18.2 autopub poetry
 
-
         - name: Check if we should release
           id: check_release
           run: |
@@ -40,6 +39,6 @@ jobs:
             git remote set-url origin https://${{ secrets.BOT_TOKEN }}@github.com/${{ github.repository }}
             autopub prepare
             poetry build
-            git remote set-head origin -a
+            git update-ref HEAD ${{ github.ref }}
             autopub commit
             poetry publish --username=__token__
