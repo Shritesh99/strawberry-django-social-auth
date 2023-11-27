@@ -14,11 +14,11 @@ on:
 jobs:
   Check:
     name: Check and Lint
-    uses: ./.github/workflows/steps/mypy.yml
+    uses: ./.github/workflows/mypy.yml
 
   Test:
     name: Test
     needs:
       - Check
     if: needs.Check.result == 'success'
-    uses: ./.github/workflows/steps/test.yml
+    uses: ./.github/workflows/test.yml

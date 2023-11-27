@@ -1,5 +1,5 @@
 ---
-name: On Push
+name: On Release
 
 on:
   release:
@@ -9,28 +9,28 @@ on:
 jobs:
   Check:
     name: Check and Lint
-    uses: ./.github/workflows/steps/mypy.yml
+    uses: ./.github/workflows/mypy.yml
 
   Test:
     name: Test
     needs:
       - Check
     if: needs.Check.result == 'success'
-    uses: ./.github/workflows/steps/test.yml
+    uses: ./.github/workflows/test.yml
 
   Release_Check:
     name: Check Release
     needs:
       - Test
     if: needs.Test.result == 'success'
-    uses: ./.github/workflows/steps/release_check.yml
+    uses: ./.github/workflows/release_check.yml
 
   Release:
     name: Release
     needs:
       - Release_Check
     if: needs.Release_Check.result == 'success'
-    uses: ./.github/workflows/steps/release.yml
+    uses: ./.github/workflows/release_steps.yml
 
 
   Docs:
@@ -38,4 +38,4 @@ jobs:
     needs:
       - Release
     if: needs.Release.result == 'success'
-    uses: ./.github/workflows/steps/gh-pages.yml
+    uses: ./.github/workflows/gh-pages.yml
