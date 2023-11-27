@@ -39,6 +39,8 @@ jobs:
             git remote set-url origin https://${{ secrets.BOT_TOKEN }}@github.com/${{ github.repository }}
             autopub prepare
             poetry build
-            git update-ref HEAD ${{ github.ref }}
-            autopub commit
+            git add .
+            git rm --cached RELEASE.md
+            git commit -m Release "${{ github.repository_basename }} ${{ github.event.release.name }}"
+            git push origin master
             poetry publish --username=__token__
