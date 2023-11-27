@@ -19,7 +19,7 @@ jobs:
     name: Tests
     environment: Deployment
     runs-on: ubuntu-latest
-    
+
     strategy:
       fail-fast: false
       matrix:
