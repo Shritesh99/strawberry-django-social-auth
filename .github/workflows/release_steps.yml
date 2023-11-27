@@ -2,6 +2,11 @@ name: Release
 
 on:
   workflow_call:
+    secrets:
+      BOT_TOKEN:
+        required: true
+      PYPI_TOKEN:
+        required: true
 
 jobs:
   deploy:

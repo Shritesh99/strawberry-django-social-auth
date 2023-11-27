@@ -2,6 +2,9 @@ name: Release file check
 
 on:
   workflow_call:
+    secrets:
+      BOT_TOKEN:
+        required: true
 
 jobs:
   validate:

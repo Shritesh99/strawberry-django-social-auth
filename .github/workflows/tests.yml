@@ -3,7 +3,11 @@ name: Run Tests
 
 on:
   workflow_call:
-
+    secrets:
+      CODECOV_TOKEN:
+        required: true
+      GOOGLE_CLIENT_KEY:
+        required: true
 jobs:
   tests:
     name: Tests

@@ -17,6 +17,9 @@ jobs:
       - Check
     if: needs.Check.result == 'success'
     uses: ./.github/workflows/tests.yml
+    secrets:
+      GOOGLE_CLIENT_KEY: ${{ secrets.GOOGLE_CLIENT_KEY }}
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   Release_Check:
     name: Check Release
@@ -24,6 +27,8 @@ jobs:
       - Test
     if: needs.Test.result == 'success'
     uses: ./.github/workflows/release_check.yml
+    secrets:
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 
   Release:
     name: Release
@@ -31,7 +36,9 @@ jobs:
       - Release_Check
     if: needs.Release_Check.result == 'success'
     uses: ./.github/workflows/release_steps.yml
-
+    secrets:
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+      PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
 
   Docs:
     name: Deploy Docs
