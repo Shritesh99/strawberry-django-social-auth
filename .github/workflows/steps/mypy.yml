@@ -2,20 +2,8 @@
 name: MyPy
 
 on:
-  push:
-    branches:
-      - master
-      - main
-  pull_request:
-    branches:
-      - master
-      - main
-    paths:
-      - "qtgql/**"
-      - "tests/**"
-      - ".github/workflows/mypy.yml"
-  release:
-    types: [ released ]
+  workflow_call:
+
 env:
   IS_GITHUB_ACTION: 1
 
@@ -30,7 +18,6 @@ jobs:
 
 
     steps:
-
       - name: Checkout
         uses: actions/checkout@v3
 

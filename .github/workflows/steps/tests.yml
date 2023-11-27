@@ -2,17 +2,7 @@
 name: Run Tests
 
 on:
-  workflow_run:
-    workflows: [ "MyPy" ]
-    branches: [ master, main ]
-    types:
-      - completed
-  push:
-    branches: [ master, main ]
-  pull_request:
-    branches: [ master, main ]
-  release:
-    types: [ released ]
+  workflow_call:
 
 jobs:
   tests:
@@ -27,11 +17,6 @@ jobs:
         python-version: ["3.8", "3.9", "3.10", "3.11"]
 
     steps:
-      - name: Debugging
-        run: |
-          echo "Workflow Run Context: ${{ toJson(github.event.workflow_run) }}"
-          echo "Current Event Context: ${{ toJson(github.event) }}"
-
       - name: Checkout
         uses: actions/checkout@v3
 

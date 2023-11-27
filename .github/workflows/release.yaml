@@ -1,0 +1,41 @@
+---
+name: On Push
+
+on:
+  release:
+    types:
+      - released
+
+jobs:
+  Check:
+    name: Check and Lint
+    uses: ./.github/workflows/steps/mypy.yml
+
+  Test:
+    name: Test
+    needs:
+      - Check
+    if: needs.Check.result == 'success'
+    uses: ./.github/workflows/steps/test.yml
+
+  Release_Check:
+    name: Check Release
+    needs:
+      - Test
+    if: needs.Test.result == 'success'
+    uses: ./.github/workflows/steps/release_check.yml
+
+  Release:
+    name: Release
+    needs:
+      - Release_Check
+    if: needs.Release_Check.result == 'success'
+    uses: ./.github/workflows/steps/release.yml
+
+
+  Docs:
+    name: Deploy Docs
+    needs:
+      - Release
+    if: needs.Release.result == 'success'
+    uses: ./.github/workflows/steps/gh-pages.yml

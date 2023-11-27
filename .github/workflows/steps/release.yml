@@ -1,11 +1,7 @@
 name: Release
 
 on:
-  workflow_run:
-    workflows: [ "Release file check" ]
-    branches: [ master, main ]
-    types:
-      - completed
+  workflow_call:
 
 jobs:
   deploy:

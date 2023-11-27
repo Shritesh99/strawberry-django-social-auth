@@ -1,11 +1,7 @@
 name: Release file check
 
 on:
-  workflow_run:
-    workflows: [ "Run Tests" ]
-    branches: [ master, main ]
-    types:
-      - completed
+  workflow_call:
 
 jobs:
   validate:

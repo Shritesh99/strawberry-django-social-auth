@@ -1,0 +1,24 @@
+---
+name: On Push and Pull Requests
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+    branches:
+      - master
+      - main
+
+jobs:
+  Check:
+    name: Check and Lint
+    uses: ./.github/workflows/steps/mypy.yml
+
+  Test:
+    name: Test
+    needs:
+      - Check
+    if: needs.Check.result == 'success'
+    uses: ./.github/workflows/steps/test.yml
