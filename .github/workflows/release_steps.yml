@@ -33,10 +33,10 @@ jobs:
           env:
             POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
           run: |
-            git config user.name github-actions
-            git config user.email github-actions@github.com
             autopub prepare
             poetry build
+            git config user.name github-actions
+            git config user.email github-actions@github.com
             git add .
             git rm --cached RELEASE.md
             git commit -m "Release ${{ github.repository_basename }} ${{ github.event.release.name }}"
