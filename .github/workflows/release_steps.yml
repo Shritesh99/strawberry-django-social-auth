@@ -31,7 +31,6 @@ jobs:
             set +e
             echo ::set-output name=release::$(autopub check)
         - name: Publish
-          uses: actions/checkout@v4
           if: steps.check_release.outputs.release == ''
           env:
             GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
