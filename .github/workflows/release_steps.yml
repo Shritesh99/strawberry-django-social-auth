@@ -3,6 +3,8 @@ name: Release
 on:
   workflow_call:
     secrets:
+      BOT_TOKEN:
+        required: true
       PYPI_TOKEN:
         required: true
 
@@ -29,10 +31,13 @@ jobs:
             set +e
             echo ::set-output name=release::$(autopub check)
         - name: Publish
+          uses: actions/checkout@v4
           if: steps.check_release.outputs.release == ''
           env:
+            GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
             POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
           run: |
+            git remote set-url origin https://${{ github.actor }}:${{ secrets.BOT_TOKEN }}@github.com/${{ github.repository }}
             autopub prepare
             poetry build
             git config user.name github-actions
@@ -40,5 +45,5 @@ jobs:
             git add .
             git rm --cached RELEASE.md
             git commit -m "Release ${{ github.repository_basename }} ${{ github.event.release.name }}"
-            git push origin master
+            git push origin master --force
             poetry publish --username=__token__

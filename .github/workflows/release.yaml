@@ -37,6 +37,7 @@ jobs:
     if: needs.Release_Check.result == 'success'
     uses: ./.github/workflows/release_steps.yml
     secrets:
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
       PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
 
   Docs:
