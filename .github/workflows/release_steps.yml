@@ -36,11 +36,11 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
             POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
           run: |
-            git remote set-url origin https://${{ secrets.BOT_TOKEN }}@github.com/${{ github.repository }}
+            git remote set-url origin https://${{ github.actor }}:${{ secrets.BOT_TOKEN }}@github.com/${{ github.repository }}
             autopub prepare
             poetry build
             git add .
             git rm --cached RELEASE.md
             git commit -m "Release ${{ github.repository_basename }} ${{ github.event.release.name }}"
-            git push origin master
+            git push origin master --force
             poetry publish --username=__token__
