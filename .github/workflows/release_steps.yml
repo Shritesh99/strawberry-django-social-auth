@@ -3,8 +3,6 @@ name: Release
 on:
   workflow_call:
     secrets:
-      BOT_TOKEN:
-        required: true
       PYPI_TOKEN:
         required: true
 
@@ -33,14 +31,14 @@ jobs:
         - name: Publish
           if: steps.check_release.outputs.release == ''
           env:
-            GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
             POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
           run: |
-            git remote set-url origin https://${{ github.actor }}:${{ secrets.BOT_TOKEN }}@github.com/${{ github.repository }}
+            git config user.name github-actions
+            git config user.email github-actions@github.com
             autopub prepare
             poetry build
             git add .
             git rm --cached RELEASE.md
             git commit -m "Release ${{ github.repository_basename }} ${{ github.event.release.name }}"
-            git push origin master --force
+            git push origin master
             poetry publish --username=__token__
