@@ -16,7 +16,7 @@ class SocialAuthMixin(BaseMixin):
 
     @classmethod
     @social_auth
-    def resolve_mutation(cls, info: Info, input_: SocialAuthInput, user, errors) -> SocialType:
+    def resolve_mutation(cls, info: Info, input_: SocialAuthInput, social_user, errors) -> SocialType:
         if errors is not None:
             return SocialType(success=False, errors=errors)
-        return SocialType.from_social_user(user)
+        return SocialType.from_social_user(social_user)

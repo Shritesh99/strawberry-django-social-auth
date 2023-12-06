@@ -45,13 +45,13 @@ def social_auth(f):
     """
     @psa
     @wraps(f)
-    def wrapper(cls, info, _input, user, errors, **kwargs):
+    def wrapper(cls, info, _input, social_user, errors, **kwargs):
         def on_resolve(payload):
-            payload.user = user
+            payload.social_user = social_user
             payload.errors = errors
             return payload
 
-        result = f(cls, info, _input, user, errors, **kwargs)
+        result = f(cls, info, _input, social_user, errors, **kwargs)
 
         if is_thenable(result):
             return Promise.resolve(result).then(on_resolve)

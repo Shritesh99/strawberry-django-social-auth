@@ -47,19 +47,19 @@ class SocialType(ObtainJSONWebTokenType):
         resolver=resolve_extra_data)
 
     @classmethod
-    def from_social_user(cls, user) -> "SocialType":
+    def from_social_user(cls, social_user) -> "SocialType":
         """
         Creates a new token and possibly a new refresh token based on the user.
         """
         ret = SocialType(
             success=True,
-            user=cast(UserType, user),
-            token=TokenType.from_user(user),
-            uid=user.social_user.uid,
-            provider=user.social_user.provider,
+            user=cast(UserType, social_user),
+            token=TokenType.from_user(social_user),
+            uid=social_user.social_user.uid,
+            provider=social_user.social_user.provider,
         )
         if hasattr(settings, 'SOCIAL_AUTH_PIPELINE') and 'gql_social_auth.pipeline.get_avatar' in settings.SOCIAL_AUTH_PIPELINE:
-            ret.avatar = user.avatar
+            ret.avatar = social_user.avatar
         if app_settings.JWT_LONG_RUNNING_REFRESH_TOKEN:
-            ret.refresh_token = cast(RefreshTokenType, RefreshToken.from_user(user))
+            ret.refresh_token = cast(RefreshTokenType, RefreshToken.from_user(social_user))
         return ret
