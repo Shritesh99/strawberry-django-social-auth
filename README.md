@@ -1,4 +1,4 @@
-[![Tests](https://img.shields.io/github/actions/workflow/status/shritesh99/strawberry-django-social-auth/release.yaml?label=Tests&style=for-the-badge)](https://github.com/shritesh99/strawberry-django-social-auth/actions/workflows/tests.yml)
+[![Tests](https://img.shields.io/github/actions/workflow/status/shritesh99/strawberry-django-social-auth/push.yaml?label=Tests&style=for-the-badge)](https://github.com/shritesh99/strawberry-django-social-auth/actions/workflows/tests.yml)
 
 [![Codecov](https://img.shields.io/codecov/c/github/shritesh99/strawberry-django-social-auth?style=for-the-badge)](https://app.codecov.io/gh/shritesh99/strawberry-django-social-auth)
 

@@ -1,6 +1,4 @@
 def get_avatar(backend, strategy, details, response, user=None, is_new=False, *args, **kwargs):
-    if not is_new:
-        return
     url = None
     if backend.name == "facebook":
         # The main part is how to get the profile picture URL and then do what you need to do
