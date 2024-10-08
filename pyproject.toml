@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "strawberry-django-social-auth"
-version = "0.4.2"
+version = "0.4.3"
 description = "Graphql Social authentication system with Strawberry for Django."
 license = "MIT"
 authors = ["Shritesh Jamulkar <shritesh.sj@gmail.com>"]
