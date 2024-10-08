@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://github.com/Shritesh99/strawberry-django-social-auth/</loc>
+         <lastmod>2024-10-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://github.com/Shritesh99/strawberry-django-social-auth/api/</loc>
+         <lastmod>2024-10-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://github.com/Shritesh99/strawberry-django-social-auth/changelog/</loc>
+         <lastmod>2024-10-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://github.com/Shritesh99/strawberry-django-social-auth/contributing/</loc>
+         <lastmod>2024-10-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://github.com/Shritesh99/strawberry-django-social-auth/contributors/</loc>
+         <lastmod>2024-10-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+</urlset>
