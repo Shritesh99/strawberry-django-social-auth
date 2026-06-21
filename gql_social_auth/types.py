@@ -1,7 +1,6 @@
 import strawberry
 from typing import TYPE_CHECKING, Optional, cast, NewType
 from django.conf import settings
-from strawberry.types import Info
 
 from gqlauth.user.types_ import UserType
 from gqlauth.core.utils import app_settings
@@ -28,7 +27,7 @@ SocialJSON = strawberry.scalar(
 )
 
 
-def resolve_extra_data(self, info: Info) -> Optional[SocialJSON]:
+def resolve_extra_data(self, info) -> SocialJSON:
     if self.errors is not None:
         return None
     self.user.social_user.extra_data.pop('access_token', None)
