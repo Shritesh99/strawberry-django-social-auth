@@ -1,5 +1,5 @@
 import strawberry
-from typing import TYPE_CHECKING, Optional, cast, NewType
+from typing import TYPE_CHECKING, Any, Optional, cast, NewType
 from django.conf import settings
 from strawberry.types import Info
 
@@ -28,7 +28,7 @@ SocialJSON = strawberry.scalar(
 )
 
 
-def resolve_extra_data(self, info: Info) -> Optional[SocialJSON]:
+def resolve_extra_data(self, info: Info) -> Optional[Any]:
     if self.errors is not None:
         return None
     self.user.social_user.extra_data.pop('access_token', None)
@@ -43,7 +43,7 @@ class SocialType(ObtainJSONWebTokenType):
         description="User's Avarar's URL", default=None)
     provider: Optional[str] = strawberry.field(
         description="OAUTH provider", default=None)
-    extra_data: Optional[SocialJSON] = strawberry.field(
+    extra_data: Optional[SocialJSON] = strawberry.field(  # type: ignore[valid-type]
         description="Extra data requested from user",
         resolver=resolve_extra_data)
 
