@@ -1,3 +1,3 @@
 Release type: patch
 
-Added support for Django 6.0
+Added support for Django 6.0.
